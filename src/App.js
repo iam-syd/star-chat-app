@@ -4,8 +4,11 @@ import { Button } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { Input } from '@mui/material';
 import { InputLabel } from '@mui/material';
-import Message from './Components/Message';
-import db from './firebase';
+import Message from './Message';
+import database from './firebase.js';
+import { doc, onSnapshot, collection, query, where } from "firebase/firestore";
+import { getFirestore } from 'firebase/firestore';
+// import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 function App() {
 
@@ -13,19 +16,27 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [username, setUsername] = useState('');
 
-  useEffect(()=>{
+  // useEffect(() => {
 
-    db.collection('message').onSnapshot(snapshot => {
-      setMessages(snapshot.docs.map(doc => {
-        doc.data()}))
-    })
+  //   database.collection('messages').onSnapshot(snapshot => {
+  //     setMessages(snapshot.docs.map(doc =>
+  //       doc.data()))
+  //   })
+// }, [])
 
-  }, [])
+    useEffect(() => {
+      const db = getFirestore();
+      const q = query(collection(db, "messages"))
+      const unsub = onSnapshot(q, (querySnapshot) => {
+        setMessages(querySnapshot.docs.map(doc => doc.data()));
+      });
+    }, [])
+
 
   useEffect(() => {
     const usernameVal = prompt('Please enter your name:')
     setUsername(usernameVal);
-  },[])
+  }, [])
 
 
   const sendMessage = (event) => {
@@ -33,7 +44,7 @@ function App() {
 
     //current input val(current message) is apended at the end of messages array
     setMessages([
-      ...messages, { username: username, text: input }
+      ...messages, { username: username, message: input }
     ])
     setInput('')
 
@@ -41,7 +52,7 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>Hello SYD 🚀</h1>
+      <h1>SYD Chat 🚀</h1>
 
       <form>
 
