@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyD8XwE4XqwDx1SCsKyDbjHenRYdCwL4NHc",
@@ -11,14 +16,16 @@ const firebaseConfig = {
     measurementId: "G-2SZ0L7EKDD"
 };
 
+// initialize firebase app
 const app = initializeApp(firebaseConfig);
+
+// init services
 const db = getFirestore(app);
 
-// async function getMessages(db) {
-//     const citiesCol = collection(db, 'messages');
-//     const citySnapshot = await getDocs(citiesCol);
-//     const db = citySnapshot.docs.map(doc => doc.data());
-//     return db;
-// }
+// collection ref
+// const colRef = collection(db, 'messages');
+
+// get collection data
+// const recentData = getDocs(colRef)
 
 export default db;

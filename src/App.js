@@ -5,10 +5,10 @@ import FormControl from '@mui/material/FormControl';
 import { Input } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import Message from './Message';
-import database from './firebase.js';
-import { doc, onSnapshot, collection, query, where } from "firebase/firestore";
-import { getFirestore } from 'firebase/firestore';
-// import { getFirestore, collection, getDocs } from 'firebase/firestore';
+
+// import firebase from './firebase';
+import db from "./firebase";
+import { addDoc, collection, getDoc, getDocs, onSnapshot, query, QuerySnapshot, serverTimestamp } from "firebase/firestore";
 
 function App() {
 
@@ -16,43 +16,44 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [username, setUsername] = useState('');
 
-  // useEffect(() => {
+  useEffect(() => {
+    // const db = getFirestore();
+    // const q = query(collection(db, "messages"))
+    // const unsub = onSnapshot(q, (querySnapshot) => {
+    //   setMessages(querySnapshot.docs.map(doc => doc.data()));
+    // });
 
-  //   database.collection('messages').onSnapshot(snapshot => {
-  //     setMessages(snapshot.docs.map(doc =>
-  //       doc.data()))
-  //   })
-// }, [])
+    const colQuery = query(collection(db, "messages"));
+    const snapShotRef = onSnapshot(colQuery, (querySnapshot) => {
+      setMessages(querySnapshot.docs.map(doc => doc.data()));
+    });
 
-    useEffect(() => {
-      const db = getFirestore();
-      const q = query(collection(db, "messages"))
-      const unsub = onSnapshot(q, (querySnapshot) => {
-        setMessages(querySnapshot.docs.map(doc => doc.data()));
-      });
-    }, [])
+  }, [])
 
 
   useEffect(() => {
-    const usernameVal = prompt('Please enter your name:')
-    setUsername(usernameVal);
+    setUsername(prompt('Please enter your name:'));
   }, [])
 
 
   const sendMessage = (event) => {
     event.preventDefault();
+    const colRef = collection(db, "messages");
 
-    //current input val(current message) is apended at the end of messages array
-    setMessages([
-      ...messages, { username: username, message: input }
-    ])
+    addDoc(colRef, {
+      message: input,
+      username: username,
+      timestamp: serverTimestamp()
+    })
+
     setInput('')
-
   }
+
+
 
   return (
     <div className='App'>
-      <h1>SYD Chat 🚀</h1>
+      <h1>STAR Chat 🌟</h1>
 
       <form>
 
