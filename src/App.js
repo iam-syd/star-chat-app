@@ -5,10 +5,11 @@ import FormControl from '@mui/material/FormControl';
 import { Input } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import Message from './Message';
-
-// import firebase from './firebase';
 import db from "./firebase";
-import { addDoc, collection, getDoc, getDocs, onSnapshot, query, QuerySnapshot, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, getDoc, getDocs, onSnapshot, query, QuerySnapshot, serverTimestamp, orderBy } from "firebase/firestore";
+import FlipMove from 'react-flip-move';
+import SendIcon from '@mui/icons-material/Send';
+import IconButton from '@mui/material/IconButton';
 
 function App() {
 
@@ -17,15 +18,13 @@ function App() {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    // const db = getFirestore();
-    // const q = query(collection(db, "messages"))
-    // const unsub = onSnapshot(q, (querySnapshot) => {
-    //   setMessages(querySnapshot.docs.map(doc => doc.data()));
-    // });
 
-    const colQuery = query(collection(db, "messages"));
+    // FETCHING DATA 💾
+    const colQuery = query(collection(db, "messages"), orderBy('timestamp', 'desc'));
     const snapShotRef = onSnapshot(colQuery, (querySnapshot) => {
-      setMessages(querySnapshot.docs.map(doc => doc.data()));
+      setMessages(querySnapshot.docs.map(doc => (
+        { id: doc.id, message: doc.data() }
+      )));
     });
 
   }, [])
@@ -53,35 +52,42 @@ function App() {
 
   return (
     <div className='App'>
+      <img src="https://facebookbrand.com/wp-content/uploads/2018/09/Header-e1538151782912.png?w=100&h=100" />
       <h1>STAR Chat 🌟</h1>
 
-      <form>
-
-        <FormControl>
-          <InputLabel>Enter a message...</InputLabel>
+      <form className='app__form'>
+        <FormControl className="app__formControl">
           <Input
+            className='app__input'
+            placeholder='Enter a message...'
             value={input}
             onChange={event => { setInput(event.target.value) }}
           />
-          <Button
+
+          <IconButton
+            className='app__iconButton'
             disabled={!input}
-            variant="contained"
+            variant="text"
             color='primary'
             type='submit'
-            onClick={sendMessage}>Send Message</Button>
+            onClick={sendMessage}>
+            <SendIcon />
+          </IconButton>
         </FormControl>
-
       </form>
 
-      {
-        messages.map(message => (
-          <Message
-            username={username}
-            message={message}
-          />
-        ))
-      }
 
+      <FlipMove>
+        {
+          messages.map(({ id, message }) => (
+            <Message
+              key={id}
+              username={username}
+              message={message}
+            />
+          ))
+        }
+      </FlipMove>
 
     </div>
   );
