@@ -1,0 +1,33 @@
+.infodialog__mainDiv {
+  margin: 0 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5em;
+  border-bottom-left-radius: 0.8em;
+  border-bottom-right-radius: 0.8em;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(17.5px);
+  -webkit-backdrop-filter: blur(17.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.infodialog__textfield {
+  color: #0084ff !important;
+  margin: 0.5em !important;
+}
+
+.infodialog__ageRestriction {
+  margin-bottom: 0.5em !important;
+}
+
+.infodialog__ageRestriction label {
+  color: #d32f2f;
+  font-size: 0.8em;
+}
+
+.infodialog__submitBtn {
+  background-color: #0084ff !important;
+}

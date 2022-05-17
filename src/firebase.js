@@ -7,13 +7,12 @@ import {
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD8XwE4XqwDx1SCsKyDbjHenRYdCwL4NHc",
-    authDomain: "facebook-messenger-clone-a444a.firebaseapp.com",
-    projectId: "facebook-messenger-clone-a444a",
-    storageBucket: "facebook-messenger-clone-a444a.appspot.com",
-    messagingSenderId: "440299143936",
-    appId: "1:440299143936:web:b267876311edf38bf1e9e5",
-    measurementId: "G-2SZ0L7EKDD"
+    apiKey: "AIzaSyDFQ7r3dA_osEk7PSuw9BQT_-ymwuBd6G8",
+  authDomain: "starchat-514.firebaseapp.com",
+  projectId: "starchat-514",
+  storageBucket: "starchat-514.appspot.com",
+  messagingSenderId: "135374927",
+  appId: "1:135374927:web:84ae1361b9bd043cafa23a"
 };
 
 // initialize firebase app

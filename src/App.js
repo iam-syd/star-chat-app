@@ -11,6 +11,8 @@ import FlipMove from 'react-flip-move';
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton';
 
+import InfoDialog from './Components/InfoDialog';
+
 function App() {
 
   const [input, setInput] = useState('');
@@ -29,10 +31,9 @@ function App() {
 
   }, [])
 
-
-  useEffect(() => {
-    setUsername(prompt('Please enter your name:'));
-  }, [])
+  // useEffect(() => {
+  //   setUsername(prompt('Please enter your name:'));
+  // }, [])
 
 
   const sendMessage = (event) => {
@@ -48,12 +49,10 @@ function App() {
     setInput('')
   }
 
-
-
   return (
     <div className='App'>
-      <img src="https://facebookbrand.com/wp-content/uploads/2018/09/Header-e1538151782912.png?w=100&h=100" />
-      <h1>STAR Chat 🌟</h1>
+      {/* <span>🌟</span>
+      <h1>Welcome to Star Chat!</h1>
 
       <form className='app__form'>
         <FormControl className="app__formControl">
@@ -87,7 +86,9 @@ function App() {
             />
           ))
         }
-      </FlipMove>
+      </FlipMove> */}
+
+      <InfoDialog/>
 
     </div>
   );
